@@ -1,3 +1,26 @@
+body {
+  max-width: 500px;
+  margin: auto;
+}
+
 h1 {
-  color: green;
+  text-align: center;
+}
+
+h2 {
+  text-align: center;
+}
+
+#notePad {
+  height: 15em;
+  width: 100%;
+  font-size: 16px;
+}
+
+#noteSave {
+  margin-left: 35%;
+  height: 2em;
+  width: 30%;
+  font-size: 15px;
+  padding: 0;
 }
