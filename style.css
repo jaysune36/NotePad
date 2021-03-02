@@ -24,3 +24,7 @@ h2 {
   font-size: 15px;
   padding: 0;
 }
+
+#noteListItem {
+  margin-inline-start: 11em;
+}
