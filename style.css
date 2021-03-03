@@ -26,5 +26,9 @@ h2 {
 }
 
 #noteListItem {
-  margin-inline-start: 11em;
+  margin-inline-start: 10%;
+}
+
+#deleteButton {
+  margin-left: 2em;
 }
