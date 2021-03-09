@@ -25,6 +25,7 @@ noteSave.addEventListener("click", function () {
 
   noInput.style.visibility = 'hidden';
   noteList.insertAdjacentElement('afterbegin', newLi);
+  localStorage.setItem(getNoteList, notePad.value);
   newLi.id = "noteListItem";
   newLi.className = getNoteList;
   newLi.innerHTML = notePadValue;
@@ -50,6 +51,7 @@ noteSave.addEventListener("click", function () {
       //console.log('deleted');
       //console.dir(targetLi.className)
       targetLi.remove()
+      localStorage.removeItem(targetLi.className)
 
       if (noteList.innerHTML === '') {
         noInput.style.visibility = 'visible';
@@ -61,8 +63,10 @@ noteSave.addEventListener("click", function () {
       //console.log('edited');
 
       targetLi.removeChild(itemBtnContainer);
-      targetLi.remove();
+      targetLi.remove(targetLi);
       notePad.value = targetLi.innerText;
+      localStorage.remove(targetLi.className)
+      localStorage.setItem(getNoteList, notePad.value);
       //let inputBtnNameRemove = getEditDeleteName.replace('Edit', '');
       //let removeContainer = targetLi.nextElementSibiling;
       //console.log(targetLi.innerText);
@@ -86,5 +90,5 @@ getDeleteAll.addEventListener('click', function () {
 
   noteList.innerHTML = '';
   noInput.style.visibility = 'visible';
-
+  localStorage.clear();
 })
