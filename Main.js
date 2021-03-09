@@ -19,9 +19,9 @@ noteSave.addEventListener("click", function () {
   newDeleteBtn.id = "deleteButton";
   newEditBtn.id = "editButton";
 
-  if(notePadValue === "") {
+  if (notePadValue === "") {
     return null;
-    }
+  }
 
   noInput.style.visibility = 'hidden';
   noteList.insertAdjacentElement('afterbegin', newLi);
@@ -45,51 +45,45 @@ noteSave.addEventListener("click", function () {
     const isEditBtn = e.target.id === 'editButton';
     let target = e.target.parentElement;
     let targetLi = target.closest("li")
-    //let getNoteClassName = getNoteItem.className;
-    //let matchingNote = e.target.className === getNoteClassName;
 
-    if(isDeleteBtn && targetLi.className === e.target.className) {
+    if (isDeleteBtn && targetLi.className === e.target.className) {
       //console.log('deleted');
       //console.dir(targetLi.className)
       targetLi.remove()
-      
-      //trying to create function that will check if noteList is empty
-      //and if noteList is empty to display noInput Text
-      if(noteList.innerHTML === '') {
+
+      if (noteList.innerHTML === '') {
         noInput.style.visibility = 'visible';
-      } 
-      
-    } 
-
-    if(isEditBtn) {
-      //console.log('edited');
-      
-      if(targetLi.className === e.target.className) {
-        targetLi.removeChild(itemBtnContainer);
-        targetLi.remove();
-        notePad.value = targetLi.innerText; 
-        //let inputBtnNameRemove = getEditDeleteName.replace('Edit', '');
-        //let removeContainer = targetLi.nextElementSibiling;
-        //console.log(targetLi.innerText);
-        //console.dir(getEditDeleteName);
-
-        if(noteList.innerHTML === '') {
-          noInput.style.visibility = 'visible';
-        }
-
       }
-      
+
+    }
+
+    if (isEditBtn && targetLi.className === e.target.className) {
+      //console.log('edited');
+
+      targetLi.removeChild(itemBtnContainer);
+      targetLi.remove();
+      notePad.value = targetLi.innerText;
+      //let inputBtnNameRemove = getEditDeleteName.replace('Edit', '');
+      //let removeContainer = targetLi.nextElementSibiling;
+      //console.log(targetLi.innerText);
+      //console.dir(getEditDeleteName);
+
+      if (noteList.innerHTML === '') {
+        noInput.style.visibility = 'visible';
+      }
+
+
     }
   })
 
 })
 
-clearInput.addEventListener("click", function() {
+clearInput.addEventListener("click", function () {
   notePad.value = "";
 })
 
-getDeleteAll.addEventListener('click', function() {
-  
+getDeleteAll.addEventListener('click', function () {
+
   noteList.innerHTML = '';
   noInput.style.visibility = 'visible';
 

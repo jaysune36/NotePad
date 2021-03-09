@@ -18,9 +18,9 @@ h2 {
 }
 
 #inputBtnContainer {
-  margin-left: 11%;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 }
 
 #noteSave, #clearInput, #deleteAllInputs {
@@ -28,6 +28,21 @@ h2 {
   width: 30%;
   font-size: 15px;
   padding: 0;
+  border-radius: 0.5em;
+  background-color: #FFFFFF;
+}
+
+#deleteButton, #editButton {
+  font-size: 11px;
+  height: 2em;
+  padding: 1px 7px;
+  border-radius: 0.5em;
+  background-color: #FFFFFF;
+}
+
+#noteSave:hover, #clearInput:hover, #deleteAllInputs:hover, #deleteButton:hover, #editButton:hover{
+  cursor: pointer;
+  background-color: #F5F5F5;
 }
 
 #noInput {
