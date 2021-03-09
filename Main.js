@@ -24,7 +24,7 @@ noteSave.addEventListener("click", function () {
     }
 
   noInput.style.visibility = 'hidden';
-  noteList.insertAdjacentElement('afterbegin', newLi)
+  noteList.insertAdjacentElement('afterbegin', newLi);
   newLi.id = "noteListItem";
   newLi.className = getNoteList;
   newLi.innerHTML = notePadValue;
@@ -48,18 +48,33 @@ noteSave.addEventListener("click", function () {
     //let getNoteClassName = getNoteItem.className;
     //let matchingNote = e.target.className === getNoteClassName;
 
-    if(isDeleteBtn) {
-      console.log('deleted');
-      console.dir(targetLi.className)
+    if(isDeleteBtn && targetLi.className === e.target.className) {
+      //console.log('deleted');
+      //console.dir(targetLi.className)
+      targetLi.remove()
       
-      if(targetLi.className === e.target.className) {
-        targetLi.remove()
+      //trying to create function that will check if noteList is empty
+      //and if noteList is empty to display noInput Text
+      if(noteList.length == 0) {
+        noInput.style.visibility = 'visible'
       } 
       
     } 
 
     if(isEditBtn) {
-      console.log('edited')
+      //console.log('edited');
+      
+      if(targetLi.className === e.target.className) {
+        let getEditDeleteName = targetLi.removeChild(itemBtnContainer) 
+        //let inputBtnNameRemove = getEditDeleteName.replace('Edit', '');
+        //let removeContainer = targetLi.nextElementSibiling;
+        //console.log(targetLi.innerText);
+        //console.dir(getEditDeleteName);
+        targetLi.remove()
+        notePad.value = targetLi.innerText;
+
+      }
+      
     }
   })
 
