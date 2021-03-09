@@ -65,8 +65,8 @@ noteSave.addEventListener("click", function () {
       targetLi.removeChild(itemBtnContainer);
       targetLi.remove(targetLi);
       notePad.value = targetLi.innerText;
-      localStorage.remove(targetLi.className)
       localStorage.setItem(getNoteList, notePad.value);
+      localStorage.removeItem(targetLi.className);
       //let inputBtnNameRemove = getEditDeleteName.replace('Edit', '');
       //let removeContainer = targetLi.nextElementSibiling;
       //console.log(targetLi.innerText);
