@@ -4,6 +4,7 @@ let buttonSelector = document.querySelector("button");
 let clearInput = document.getElementById("clearInput");
 let notePad = document.getElementById("notePad");
 let getDeleteAll = document.getElementById("deleteAllInputs");
+let noInput = document.getElementById('noInput');
 
 
 noteSave.addEventListener("click", function () {
@@ -15,7 +16,6 @@ noteSave.addEventListener("click", function () {
   let newDeleteBtn = document.createElement("button");
   let newEditBtn = document.createElement("button");
   let newDiv = document.createElement("div");
-  let noInput = document.getElementById('noInput');
   newDeleteBtn.id = "deleteButton";
   newEditBtn.id = "editButton";
 
@@ -55,8 +55,8 @@ noteSave.addEventListener("click", function () {
       
       //trying to create function that will check if noteList is empty
       //and if noteList is empty to display noInput Text
-      if(noteList.length == 0) {
-        noInput.style.visibility = 'visible'
+      if(noteList.innerHTML === '') {
+        noInput.style.visibility = 'visible';
       } 
       
     } 
@@ -65,13 +65,17 @@ noteSave.addEventListener("click", function () {
       //console.log('edited');
       
       if(targetLi.className === e.target.className) {
-        let getEditDeleteName = targetLi.removeChild(itemBtnContainer) 
+        targetLi.removeChild(itemBtnContainer);
+        targetLi.remove();
+        notePad.value = targetLi.innerText; 
         //let inputBtnNameRemove = getEditDeleteName.replace('Edit', '');
         //let removeContainer = targetLi.nextElementSibiling;
         //console.log(targetLi.innerText);
         //console.dir(getEditDeleteName);
-        targetLi.remove()
-        notePad.value = targetLi.innerText;
+
+        if(noteList.innerHTML === '') {
+          noInput.style.visibility = 'visible';
+        }
 
       }
       
@@ -85,5 +89,8 @@ clearInput.addEventListener("click", function() {
 })
 
 getDeleteAll.addEventListener('click', function() {
+  
+  noteList.innerHTML = '';
+  noInput.style.visibility = 'visible';
 
 })
