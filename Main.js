@@ -1,33 +1,40 @@
 
 let noteSave = document.getElementById("noteSave");
-let deleteButtonCreate = document.createElement("button");
-let editButtonCreate = document.createElement("button");
-let divCreate = document.createElement("div");
+let newDeleteBtn = document.createElement("button");
+let newEditBtn = document.createElement("button");
+let newDiv = document.createElement("div");
 let buttonSelector = document.querySelector("button");
+let clearInput = document.getElementById("clearInput");
+let notePad = document.getElementById("notePad");
 
 
 noteSave.addEventListener("click", function () {
 
-  let notePad = document.getElementById("notePad");
-  let notePadValue = document.getElementById("notePad").value;
-  let createList = document.createElement("li");
-  let noteList = document.getElementById("noteList");
+  let notePadValue = notePad.value;
   const getNoteList = notePadValue + " [" + new Date() + "]";
+  let noteList = document.getElementById("noteList");
+  let notelistChild = noteList.firstElementChild;
+  let noteListContainer = document.getElementById("noteListContainer")
+  let newLi = document.createElement("li");
 
-  noteList.insertAdjacentElement('afterbegin', createList);
-  createList.id = "noteListItem";
-  createList.className = getNoteList;
-  createList.innerHTML = notePadValue;
-  createList.appendChild(divCreate);
-  divCreate.id = 'btnContainter';
-  divCreate.insertAdjacentElement('afterbegin', deleteButtonCreate);
-  divCreate.insertAdjacentElement('afterbegin', editButtonCreate);
-  deleteButtonCreate.id = "deleteButton";
-  editButtonCreate.id = "editButton";
-  deleteButtonCreate.className = getNoteList;
-  editButtonCreate.className = getNoteList;
-  deleteButtonCreate.innerHTML = "Delete";
-  editButtonCreate.innerHTML = "Edit"
+  if(notePadValue === "") {
+    return null;
+    }
+
+  noteList.appendChild(newLi)
+  newLi.id = "noteListItem";
+  newLi.className = getNoteList;
+  newLi.innerHTML = notePadValue;
+  newLi.insertAdjacentElement('afterend', newDiv);
+  newDiv.id = 'btnContainter';
+  newDiv.insertAdjacentElement('afterbegin', newDeleteBtn);
+  newDiv.insertAdjacentElement('afterbegin', newEditBtn);
+  newDeleteBtn.id = "deleteButton";
+  newEditBtn.id = "editButton";
+  newDeleteBtn.className = getNoteList;
+  newEditBtn.className = getNoteList;
+  newDeleteBtn.innerHTML = "Delete";
+  newEditBtn.innerHTML = "Edit";
   notePad.value = "";
 
   const btnContainter = document.getElementById('btnContainter');
@@ -52,3 +59,6 @@ noteSave.addEventListener("click", function () {
 
 })
 
+clearInput.addEventListener("click", function() {
+  notePad.value = "";
+})
