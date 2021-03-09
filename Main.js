@@ -54,7 +54,7 @@ noteSave.addEventListener("click", function () {
       
       if(targetLi.className === e.target.className) {
         targetLi.remove()
-      }
+      } 
       
     } 
 
