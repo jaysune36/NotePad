@@ -24,7 +24,7 @@ noteSave.addEventListener("click", function () {
     }
 
   noInput.style.visibility = 'hidden';
-  noteList.appendChild(newLi)
+  noteList.insertAdjacentElement('afterbegin', newLi)
   newLi.id = "noteListItem";
   newLi.className = getNoteList;
   newLi.innerHTML = notePadValue;
