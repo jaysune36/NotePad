@@ -34,7 +34,7 @@ h2 {
   margin-inline-start: 10%;
 }
 
-#btnContainter {
+#itemBtnContainter {
   display: flex;
   flex-direction: row-reverse;
 }

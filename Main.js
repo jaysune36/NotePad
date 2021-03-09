@@ -1,8 +1,5 @@
 
 let noteSave = document.getElementById("noteSave");
-let newDeleteBtn = document.createElement("button");
-let newEditBtn = document.createElement("button");
-let newDiv = document.createElement("div");
 let buttonSelector = document.querySelector("button");
 let clearInput = document.getElementById("clearInput");
 let notePad = document.getElementById("notePad");
@@ -13,9 +10,10 @@ noteSave.addEventListener("click", function () {
   let notePadValue = notePad.value;
   const getNoteList = notePadValue + " [" + new Date() + "]";
   let noteList = document.getElementById("noteList");
-  let notelistChild = noteList.firstElementChild;
-  let noteListContainer = document.getElementById("noteListContainer")
   let newLi = document.createElement("li");
+  let newDeleteBtn = document.createElement("button");
+  let newEditBtn = document.createElement("button");
+  let newDiv = document.createElement("div");
 
   if(notePadValue === "") {
     return null;
@@ -26,7 +24,7 @@ noteSave.addEventListener("click", function () {
   newLi.className = getNoteList;
   newLi.innerHTML = notePadValue;
   newLi.insertAdjacentElement('afterend', newDiv);
-  newDiv.id = 'btnContainter';
+  newDiv.id = 'itemBtnContainter';
   newDiv.insertAdjacentElement('afterbegin', newDeleteBtn);
   newDiv.insertAdjacentElement('afterbegin', newEditBtn);
   newDeleteBtn.id = "deleteButton";
@@ -37,22 +35,22 @@ noteSave.addEventListener("click", function () {
   newEditBtn.innerHTML = "Edit";
   notePad.value = "";
 
-  const btnContainter = document.getElementById('btnContainter');
+  const itemBtnContainer = document.getElementById('itemBtnContainter');
 
-  btnContainter.addEventListener("click", (e) => {
+  itemBtnContainer.addEventListener("click", (e) => {
     const isDeleteBtn = e.target.id === 'deleteButton';
     const isEditBtn = e.target.id === 'editButton';
-    let getDeleteBtn = document.getElementById('deleteButton');
-    let getNoteItem = getDeleteBtn.closest('#noteListItem');
-    let getNoteClassName = getNoteItem.className;
-    let matchingNote = e.target.className === getNoteClassName
+    //let getDeleteBtn = document.getElementById('deleteButton');
+    //let getNoteItem = getDeleteBtn.closest('#noteListItem');
+    //let getNoteClassName = getNoteItem.className;
+    //let matchingNote = e.target.className === getNoteClassName
 
-    if(isDeleteBtn && matchingNote) {
+    if(isDeleteBtn) {
       console.log('deleted');
       
     } 
 
-    if(isEditBtn && matchingNote) {
+    if(isEditBtn) {
       console.log('edited')
     }
   })
