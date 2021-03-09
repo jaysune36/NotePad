@@ -23,6 +23,10 @@ h2 {
   justify-content: space-between;
 }
 
+ul > li {
+  margin-bottom: 2em;
+}
+
 #noteSave, #clearInput, #deleteAllInputs {
   height: 2em;
   width: 30%;
