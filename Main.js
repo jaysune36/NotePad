@@ -6,11 +6,17 @@ let notePad = document.getElementById("notePad");
 let getDeleteAll = document.getElementById("deleteAllInputs");
 let noInput = document.getElementById('noInput');
 
+window.addEventListener("load", function() {
+
+  for(let i = 0; i < localStorage.length; i++) {
+    console.log(localStorage.key(i));
+  }
+})
 
 noteSave.addEventListener("click", function () {
 
   let notePadValue = notePad.value;
-  const getNoteList = notePadValue + " [" + new Date() + "]";
+  const setNoteList = notePadValue + " [" + new Date() + "]";
   let noteList = document.getElementById("noteList");
   let newLi = document.createElement("li");
   let newDeleteBtn = document.createElement("button");
@@ -25,16 +31,16 @@ noteSave.addEventListener("click", function () {
 
   noInput.style.visibility = 'hidden';
   noteList.insertAdjacentElement('afterbegin', newLi);
-  localStorage.setItem(getNoteList, notePad.value);
+  localStorage.setItem(setNoteList, notePad.value);
   newLi.id = "noteListItem";
-  newLi.className = getNoteList;
+  newLi.className = setNoteList;
   newLi.innerHTML = notePadValue;
   newLi.insertAdjacentElement('beforeend', newDiv);
   newDiv.id = 'itemBtnContainter';
   newDiv.insertAdjacentElement('afterbegin', newDeleteBtn);
   newDiv.insertAdjacentElement('afterbegin', newEditBtn);
-  newDeleteBtn.className = getNoteList;
-  newEditBtn.className = getNoteList;
+  newDeleteBtn.className = setNoteList;
+  newEditBtn.className = setNoteList;
   newDeleteBtn.innerHTML = "Delete";
   newEditBtn.innerHTML = "Edit";
   notePad.value = "";
@@ -65,7 +71,7 @@ noteSave.addEventListener("click", function () {
       targetLi.removeChild(itemBtnContainer);
       targetLi.remove(targetLi);
       notePad.value = targetLi.innerText;
-      localStorage.setItem(getNoteList, notePad.value);
+      localStorage.setItem(setNoteList, notePad.value);
       localStorage.removeItem(targetLi.className);
       //let inputBtnNameRemove = getEditDeleteName.replace('Edit', '');
       //let removeContainer = targetLi.nextElementSibiling;
