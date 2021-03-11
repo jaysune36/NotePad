@@ -1,0 +1,27 @@
+{
+  "name": "Kyle",
+  "favoriteNumber": 3,
+  "isProgrammer": true,
+  "hobbies": ["weight lifting", "bowling"],
+  "friends": [{
+    "name": "John",
+    "favoriteNumber": 5,
+    "isProgrammer": false
+  }]
+
+}
+
+[
+  {
+    "name": "Big Corp",
+    "numberOfEmployees": 1000,
+    "ceo": "Mary",
+    "rating": 3.6
+  },
+  {
+    "name": "Small Startup",
+    "numberOfEmployees": 3,
+    "ceo": null,
+    "rating": 4.3
+  }
+]

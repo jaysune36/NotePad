@@ -1,3 +1,4 @@
+fetch("text.json");
 
 let noteSave = document.getElementById("noteSave");
 let buttonSelector = document.querySelector("button");
@@ -5,19 +6,24 @@ let clearInput = document.getElementById("clearInput");
 let notePad = document.getElementById("notePad");
 let getDeleteAll = document.getElementById("deleteAllInputs");
 let noInput = document.getElementById('noInput');
+let noteList = document.getElementById("noteList");
 
 window.addEventListener("load", function() {
 
   for(let i = 0; i < localStorage.length; i++) {
-    console.log(localStorage.key(i));
+
+    let key = localStorage.key(i)
+    let value = localStorage.getItem(key);
+    console.log(value)
+
   }
+  
 })
 
 noteSave.addEventListener("click", function () {
 
   let notePadValue = notePad.value;
-  const setNoteList = notePadValue + " [" + new Date() + "]";
-  let noteList = document.getElementById("noteList");
+  const setNoteList = notePadValue + " [" + Date.now() + "]";
   let newLi = document.createElement("li");
   let newDeleteBtn = document.createElement("button");
   let newEditBtn = document.createElement("button");
@@ -31,7 +37,7 @@ noteSave.addEventListener("click", function () {
 
   noInput.style.visibility = 'hidden';
   noteList.insertAdjacentElement('afterbegin', newLi);
-  localStorage.setItem(setNoteList, notePad.value);
+  localStorage.setItem(setNoteList, notePad.value)
   newLi.id = "noteListItem";
   newLi.className = setNoteList;
   newLi.innerHTML = notePadValue;
@@ -54,8 +60,6 @@ noteSave.addEventListener("click", function () {
     let targetLi = target.closest("li")
 
     if (isDeleteBtn && targetLi.className === e.target.className) {
-      //console.log('deleted');
-      //console.dir(targetLi.className)
       targetLi.remove()
       localStorage.removeItem(targetLi.className)
 
@@ -66,17 +70,12 @@ noteSave.addEventListener("click", function () {
     }
 
     if (isEditBtn && targetLi.className === e.target.className) {
-      //console.log('edited');
 
       targetLi.removeChild(itemBtnContainer);
       targetLi.remove(targetLi);
       notePad.value = targetLi.innerText;
-      localStorage.setItem(setNoteList, notePad.value);
+      localStorage.setItem(setNoteList, notePad.value)
       localStorage.removeItem(targetLi.className);
-      //let inputBtnNameRemove = getEditDeleteName.replace('Edit', '');
-      //let removeContainer = targetLi.nextElementSibiling;
-      //console.log(targetLi.innerText);
-      //console.dir(getEditDeleteName);
 
       if (noteList.innerHTML === '') {
         noInput.style.visibility = 'visible';
