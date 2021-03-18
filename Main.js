@@ -10,11 +10,23 @@ let noteList = document.getElementById("noteList");
 
 window.addEventListener("load", function() {
 
+  
+
   for(let i = 0; i < localStorage.length; i++) {
 
+    let newLi = document.createElement("li");
+  
     let key = localStorage.key(i)
     let value = localStorage.getItem(key);
     console.log(value)
+
+    noteList.insertAdjacentElement("afterbegin", newLi)
+    newLi.innerText = localStorage.getItem(key)
+
+    if (localStorage.getItem(key) === null) {
+      alert("no items in storage")
+      //noInput.style.visibility = 'hidden';
+    }
 
   }
   
@@ -86,6 +98,8 @@ noteSave.addEventListener("click", function () {
   })
 
 })
+
+
 
 clearInput.addEventListener("click", function () {
   notePad.value = "";
