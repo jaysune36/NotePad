@@ -9,28 +9,43 @@ let noInput = document.getElementById('noInput');
 let noteList = document.getElementById("noteList");
 
 window.addEventListener("load", function() {
-
   
 
   for(let i = 0; i < localStorage.length; i++) {
 
-    let newLi = document.createElement("li");
-  
+
     let key = localStorage.key(i)
     let value = localStorage.getItem(key);
+
+
+  const lsNoteList = key
+  let newLi = document.createElement("li");
+  let newDeleteBtn = document.createElement("button");
+  let newEditBtn = document.createElement("button");
+  let newDiv = document.createElement("div");
+  newDeleteBtn.id = "deleteButton";
+  newEditBtn.id = "editButton";
+  
     console.log(value)
 
     noteList.insertAdjacentElement("afterbegin", newLi)
     newLi.innerText = localStorage.getItem(key)
+    newLi.id = "noteListItem";
+    newLi.className = lsNoteList;
 
-    if (localStorage.getItem(key) === null) {
-      alert("no items in storage")
-      //noInput.style.visibility = 'hidden';
-    }
+    newLi.insertAdjacentElement('beforeend', newDiv);
+  newDiv.id = 'itemBtnContainter';
+  newDiv.insertAdjacentElement('afterbegin', newDeleteBtn);
+  newDiv.insertAdjacentElement('afterbegin', newEditBtn);
+  newDeleteBtn.className = key;
+  newEditBtn.className = key;
+  newDeleteBtn.innerHTML = "Delete";
+  newEditBtn.innerHTML = "Edit";
+  notePad.value = "";
+    
 
   }
   
-})
 
 noteSave.addEventListener("click", function () {
 
@@ -46,6 +61,7 @@ noteSave.addEventListener("click", function () {
   if (notePadValue === "") {
     return null;
   }
+
 
   noInput.style.visibility = 'hidden';
   noteList.insertAdjacentElement('afterbegin', newLi);
@@ -99,10 +115,10 @@ noteSave.addEventListener("click", function () {
 
 })
 
-
+})
 
 clearInput.addEventListener("click", function () {
-  notePad.value = "";
+  notePad.value = null;
 })
 
 getDeleteAll.addEventListener('click', function () {
