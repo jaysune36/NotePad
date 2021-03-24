@@ -6,18 +6,20 @@
 </head>
 
 <body>
-  <h1>NotePad</h1>
+  <h1 >NotePad</h1>
   <h2>What's on your mind?</h2>
-  <textarea id="notePad" placeholder="What are your thoughts..."></textarea>
+  <textarea id="notePad" placeholder="What are your thoughts..." tabindex="0"></textarea>
   <div id="inputBtnContainer">
-    <button type="submit" id="noteSave">Save</button>
+    <button type="submit" id="noteSave" >Save</button>
     <button type="submit" id="clearInput">Clear</button>
     <button type="submit" id="deleteAllInputs">Delete All</button>
   </div>
   <div>
     <h2 id="noInput">No Notes Currently Saved</h2>
   </div>
+  <div id="itemContainer">
   <ul id="noteList"></ul>
+  </div>
 </body>
 <footer>
   <script src="main.js"></script>

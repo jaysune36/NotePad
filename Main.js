@@ -7,6 +7,7 @@ let notePad = document.getElementById("notePad");
 let getDeleteAll = document.getElementById("deleteAllInputs");
 let noInput = document.getElementById('noInput');
 let noteList = document.getElementById("noteList");
+let itemContainer = document.getElementById("itemContainer")
 
 window.addEventListener("load", function () {
 
@@ -84,20 +85,20 @@ window.addEventListener("load", function () {
     const itemBtnContainer = document.getElementById('itemBtnContainter');
 
     itemBtnContainer.addEventListener("click", (e) => {
-      const isDeleteBtn = e.target.id === 'deleteButton';
+     // const isDeleteBtn = e.target.id === 'deleteButton';
       const isEditBtn = e.target.id === 'editButton';
       let target = e.target.parentElement;
       let targetLi = target.closest("li");
 
-      if (isDeleteBtn && targetLi.className === e.target.className) {
-        targetLi.remove();
-        localStorage.removeItem(targetLi.className);
+     // if (isDeleteBtn && targetLi.className === e.target.className) {
+      //  targetLi.remove();
+      //  localStorage.removeItem(targetLi.className);
 
-        if (noteList.innerHTML === '') {
-          noInput.style.visibility = 'visible';
-        }
+      //  if (noteList.innerHTML === '') {
+      //    noInput.style.visibility = 'visible';
+      //  }
 
-      }
+     // }
 
       if (isEditBtn && targetLi.className === e.target.className) {
 
@@ -118,6 +119,25 @@ window.addEventListener("load", function () {
   });
 
 });
+
+itemContainer.addEventListener("click", (e) => {
+  
+      const isDeleteBtn = e.target.id === 'deleteButton';
+      const isEditBtn = e.target.id === 'editButton';
+      let target = e.target.parentElement;
+      let targetLi = target.closest("li");
+
+      if (isDeleteBtn && targetLi.className === e.target.className) {
+        targetLi.remove();
+        localStorage.removeItem(targetLi.className);
+
+        if (noteList.innerHTML === '') {
+          noInput.style.visibility = 'visible';
+        }
+
+      }
+
+})
 
 clearInput.addEventListener("click", function () {
   notePad.value = null;
