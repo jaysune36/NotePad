@@ -28,8 +28,6 @@ window.addEventListener("load", function () {
       newDeleteBtn.id = "deleteButton";
       newEditBtn.id = "editButton";
 
-      console.log(value);
-
       noteList.insertAdjacentElement("beforeend", newLi);
       newLi.innerText = localStorage.getItem(key);
       newLi.id = "noteListItem";
@@ -49,6 +47,7 @@ window.addEventListener("load", function () {
     };
   };
 
+});
 
   noteSave.addEventListener("click", function () {
 
@@ -84,7 +83,7 @@ window.addEventListener("load", function () {
 
   });
 
-});
+
 
 noteContainer.addEventListener("click", (e) => {
   
