@@ -7,7 +7,7 @@ let notePad = document.getElementById("notePad");
 let getDeleteAll = document.getElementById("deleteAllInputs");
 let noInput = document.getElementById('noInput');
 let noteList = document.getElementById("noteList");
-let itemContainer = document.getElementById("itemContainer")
+let noteContainer = document.getElementById("noteContainer")
 
 window.addEventListener("load", function () {
 
@@ -35,7 +35,7 @@ window.addEventListener("load", function () {
       newLi.id = "noteListItem";
       newLi.className = lsNoteList;
 
-      newLi.insertAdjacentElement('beforeend', newDiv);
+      newLi.appendChild(newDiv);
       newDiv.id = 'itemBtnContainter';
       newDiv.insertAdjacentElement('afterbegin', newDeleteBtn);
       newDiv.insertAdjacentElement('afterbegin', newEditBtn);
@@ -67,12 +67,12 @@ window.addEventListener("load", function () {
 
 
     noInput.style.visibility = 'hidden';
-    noteList.insertAdjacentElement('afterbegin', newLi);
+    noteList.insertAdjacentElement('beforeend', newLi);
     localStorage.setItem(setNoteList, notePad.value);
     newLi.id = "noteListItem";
     newLi.className = setNoteList;
     newLi.innerHTML = notePadValue;
-    newLi.insertAdjacentElement('beforeend', newDiv);
+    newLi.appendChild(newDiv);
     newDiv.id = 'itemBtnContainter';
     newDiv.insertAdjacentElement('afterbegin', newDeleteBtn);
     newDiv.insertAdjacentElement('afterbegin', newEditBtn);
@@ -82,45 +82,11 @@ window.addEventListener("load", function () {
     newEditBtn.innerHTML = "Edit";
     notePad.value = "";
 
-    const itemBtnContainer = document.getElementById('itemBtnContainter');
-
-    itemBtnContainer.addEventListener("click", (e) => {
-     // const isDeleteBtn = e.target.id === 'deleteButton';
-      const isEditBtn = e.target.id === 'editButton';
-      let target = e.target.parentElement;
-      let targetLi = target.closest("li");
-
-     // if (isDeleteBtn && targetLi.className === e.target.className) {
-      //  targetLi.remove();
-      //  localStorage.removeItem(targetLi.className);
-
-      //  if (noteList.innerHTML === '') {
-      //    noInput.style.visibility = 'visible';
-      //  }
-
-     // }
-
-      if (isEditBtn && targetLi.className === e.target.className) {
-
-        targetLi.removeChild(itemBtnContainer);
-        targetLi.remove(targetLi);
-        notePad.value = targetLi.innerText;
-        localStorage.setItem(setNoteList, notePad.value);
-        localStorage.removeItem(targetLi.className);
-
-        if (noteList.innerHTML === '') {
-          noInput.style.visibility = 'visible';
-        }
-
-
-      }
-    });
-
   });
 
 });
 
-itemContainer.addEventListener("click", (e) => {
+noteContainer.addEventListener("click", (e) => {
   
       const isDeleteBtn = e.target.id === 'deleteButton';
       const isEditBtn = e.target.id === 'editButton';
@@ -134,6 +100,19 @@ itemContainer.addEventListener("click", (e) => {
         if (noteList.innerHTML === '') {
           noInput.style.visibility = 'visible';
         }
+
+      }
+
+      if (isEditBtn && targetLi.className === e.target.className) {
+      let textContent = targetLi.textContent;
+      targetLi.remove();
+      localStorage.removeItem(targetLi.className);
+      notePad.value = textContent.replace("EditDelete", "")
+
+        if (noteList.innerHTML === '') {
+          noInput.style.visibility = 'visible';
+        }
+
 
       }
 
