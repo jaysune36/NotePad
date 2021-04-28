@@ -7,7 +7,7 @@ let notePad = document.getElementById("notePad");
 let getDeleteAll = document.getElementById("deleteAllInputs");
 let noInput = document.getElementById('noInput');
 let noteList = document.getElementById("noteList");
-let noteContainer = document.getElementById("noteContainer")
+let noteContainer = document.getElementById("noteContainer");
 
 window.addEventListener("load", function () {
 
