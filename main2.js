@@ -18,14 +18,16 @@ function attachListItemBtn(li) {
 
 function createList(li) {
   let newItem = document.createElement('li');
+  newItem.className = Date.now();
   newItem.textContent = li;
+  localStorage.setItem(newItem.className, li)
   attachListItemBtn(newItem);
   noteList.appendChild(newItem);
 }
 
-function setStorage(li) {
-  localStorage.setItem(Date.now(), li)
-}
+// function setStorage(liClassName, li) {
+//   localStorage.setItem(liClassName, li);
+// }
 
 function getStorage() {
   for(let i = 0; i < localStorage.length; i++) {
@@ -48,7 +50,7 @@ inputBtnContainer.addEventListener('click', (e) => {
         if(notePad.value) {
           noInput.style.display = 'none';
           createList(notePad.value);
-          setStorage(notePad.value);
+          // setStorage(notePad.value);
         }
     }
 
@@ -68,8 +70,11 @@ noteList.addEventListener('click', (e) => {
   if(e.target.tagName == 'BUTTON') {
     if(e.target.className == 'delete') {
       let li = e.target.parentNode;
+      let liClass = li.className;
       let ul = li.parentNode;
       ul.removeChild(li);
+      localStorage.removeItem(liClass);
+      alert(liClass)
       if(noteList.innerHTML === '') {
         noInput.style.display = 'block';
       }
