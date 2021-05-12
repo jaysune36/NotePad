@@ -1,20 +1,23 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
-  max-width: 500px;
+  width: 70%;
   margin: auto;
 }
 
-h1 {
+h1, h2 {
   text-align: center;
 }
 
-h2 {
-  text-align: center;
+.container {
+  display: flex;
+  flex-direction: column;
 }
 
 #notePad {
-  height: 15em;
   width: 100%;
-  font-size: 16px;
 }
 
 #inputBtnContainer {
@@ -24,49 +27,67 @@ h2 {
 }
 
 
-#noteSave, #clearInput, #deleteAllInputs {
+.noteSave, .clearInput, .deleteAllInputs {
+  margin-top: .75rem;
   height: 2em;
   width: 30%;
-  font-size: 15px;
   padding: 0;
   border-radius: 0.5em;
   background-color: #FFFFFF;
 }
 
-#deleteButton, #editButton {
-  font-size: 11px;
-  height: 2em;
-  padding: 1px 7px;
-  border-radius: 0.5em;
-  background-color: #FFFFFF;
-}
-
-#noteSave:hover, #clearInput:hover, #deleteAllInputs:hover, #deleteButton:hover, #editButton:hover{
+.noteSave:hover, .clearInput:hover, .deleteAllInputs:hover, .delete:hover, .edit:hover{
   cursor: pointer;
   background-color: #F5F5F5;
 }
 
-#noInput {
-  visibility: visible;
+.noInput {
+  text-align: center;
+  font-size: 2em;
+  font-weight: inherit;
+}
+
+.noteList{
+  padding-left: 0;
+}
+
+.noteList li {
+  display: flex;
+  justify-content: flex-start; 
 }
 
 li {
-  display: flex;
-  justify-content: space-between;
-  position: relative;
-  bottom: 40px;
-  padding: 1.5rem 1.5rem;
+  padding: 1.5em .5em;
 }
 
 li:nth-child(even) {
   background-color: lightgray;
 }
 
-#noteListItem {
-  margin-inline-start: 10%;
+.delete, .edit {
+  font-size: .75em;
+  padding: .25rem .5rem;
+  border-radius: 0.5em;
+  background-color: #FFFFFF;
+  margin-right: 0;
 }
 
-#itemBtnContainter {
-  display: flex;
-  flex-direction: row-reverse;
+.delete {
+  margin-left: auto;
+}
+
+/* ======================
+    MEDIA QUERIES
+========================== */
+
+@media(min-width: 987px) {
+
+  body{
+    width: 80%;
+  }
+
+  .container {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }

@@ -5,27 +5,24 @@
   <link rel="stylesheet" href="cssStyleSheets/normalize copy.css">
   <link rel="stylesheet" type="text/css" href="cssStyleSheets/style.css">
 </head>
-
 <body>
-  <h1>NotePad</h1>
-  <h2>What's on your mind?</h2>
-  <section>
-    <textarea id="notePad" placeholder="What are your thoughts..."></textarea>
-    <div id="inputBtnContainer">
-      <button type="submit" id="noteSave">Save</button>
-      <button type="submit" id="clearInput">Clear</button>
-      <button type="submit" id="deleteAllInputs">Delete All</button>
+  <main class="container"><!-- main container -->
+    <div class="notepad-container">
+      <h1>NotePad</h1>
+      <h2>What's on your mind?</h2>
+      <textarea id="notePad" placeholder="What are your thoughts..."></textarea>
+      <div id="inputBtnContainer">
+        <button type="submit" class="noteSave">Save</button>
+        <button type="submit" class="clearInput">Clear</button>
+        <button type="submit" class="deleteAllInputs">Delete All</button>
+      </div>
     </div>
-  </section>
-  <div>
-    <h2 id="noInput">No Notes Currently Saved</h2>
-  </div>
-  <div id="noteContainer">
-    <ul id="noteList"></ul>
-  </div>
-</body>
-<footer>
+    <div id="noteListContainer"></div>
+    <h3 class="noInput">No Notes Currently Saved</h3>
+    <ul class="noteList"></ul>
+    </div>
+  </main><!-- /main container-->
   <script src="main2.js"></script>
-</footer>
+</body>
 
 </html>
