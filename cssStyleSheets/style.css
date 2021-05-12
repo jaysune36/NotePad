@@ -1,3 +1,7 @@
+/* ======================
+    BASE STYLE
+========================== */
+
 * {
   box-sizing: border-box;
 }
@@ -16,8 +20,14 @@ h1, h2 {
   flex-direction: column;
 }
 
+
+/* ======================
+    PAGE STYLING
+========================== */
+
 #notePad {
   width: 100%;
+  height: 30vh;
 }
 
 #inputBtnContainer {
@@ -25,7 +35,6 @@ h1, h2 {
   flex-direction: row;
   justify-content: space-between;
 }
-
 
 .noteSave, .clearInput, .deleteAllInputs {
   margin-top: .75rem;
@@ -72,6 +81,10 @@ li:nth-child(even) {
   margin-right: 0;
 }
 
+.delete, .edit {
+  margin-bottom: auto;
+}
+
 .delete {
   margin-left: auto;
 }
@@ -89,5 +102,13 @@ li:nth-child(even) {
   .container {
     flex-direction: row;
     justify-content: space-between;
+  }
+
+  .notepad-container, .noteListContainer {
+    width: 48%;
+  }
+
+  .noteList li {
+    flex-wrap: wrap;
   }
 }
