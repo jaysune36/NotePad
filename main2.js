@@ -5,12 +5,12 @@ const noInput = document.querySelector('.noInput');
 const noteListContainer = document.querySelector('#noteListContainer');
 const noteList = document.querySelector('.noteList');
 
-function attachListItemBtn() {
+function attachListItemBtn(classOne, classTwo, textOne, textTwo) {
   let createDiv = document.createElement('div');
   createDiv.className = 'btnDiv';
   createDiv.innerHTML = `
-    <button class='delete'>Delete</button>
-    <button class='edit'>Edit</button>
+    <button class='${classOne}'>${textOne}</button>
+    <button class='${classTwo}'>${textTwo}</button>
   `;
   return createDiv;
 }
@@ -26,10 +26,9 @@ function createNote(noteInfo) {
     <span>${noteInfo}</span>
   `;
   createStorage(noteInfo);
-  createLi.appendChild(attachListItemBtn());
+  createLi.appendChild(attachListItemBtn('delete', 'edit', 'Delete', 'Edit'));
   noteList.insertAdjacentElement('afterbegin', createLi);
 }
-
 
 function getStorage() {
   for (let i = 0; i < localStorage.length; i++) {
@@ -74,38 +73,54 @@ inputBtnContainer.addEventListener('click', (e) => {
 })
 
 noteList.addEventListener('click', (e) => {
-  if (e.target.tagName == 'BUTTON') {
-    if (e.target.className == 'delete') {
+  let savedNotePad;
+  if (e.target.tagName === 'BUTTON') {
+    const closestLi = e.target.closest('LI');
+    if (e.target.className === 'delete') {
       let li = e.target.parentNode;
       let liClass = li.className;
       let ul = li.parentNode;
-      ul.removeChild(li);
+      closestLi.remove();
       localStorage.removeItem(liClass);
       if (noteList.innerHTML === '') {
         noInput.style.display = 'block';
       }
     }
-  } if (e.target.className == 'edit') {
+    if(e.target.className === 'edit') {
+      let noteSpan = closestLi.querySelector('span');
+      let createInput = document.createElement('input');
+      const btnDiv = closestLi.querySelector('.btnDiv');
+      savedNotePad = noteSpan.innerText;
+      console.log(savedNotePad);
+      createInput.setAttribute('type', 'text');
+      createInput.value = noteSpan.innerText;
+      closestLi.insertAdjacentElement('afterbegin',createInput);
+      closestLi.appendChild(attachListItemBtn('save', 'cancel', 'Save', 'Cancel'));
+      closestLi.removeChild(noteSpan);
+      closestLi.removeChild(btnDiv);
+    }
+    if(e.target.className === 'save') {
+      let input = closestLi.querySelector('input');
+      const btnDiv = closestLi.querySelector('.btnDiv');
+      let createSpan = document.createElement('span');
+      createSpan.innerText = document.querySelector('input').value;
+      closestLi.insertAdjacentElement('afterbegin', createSpan);
+      closestLi.appendChild(attachListItemBtn('delete', 'edit', 'Delete', 'Edit'));
+      closestLi.removeChild(input);
+      closestLi.removeChild(btnDiv);
+    }
+    if(e.target.className === 'cancel') {
+      let input = closestLi.querySelector('input');
+      const btnDiv = closestLi.querySelector('.btnDiv');
+      let createSpan = document.createElement('span');
+      console.log(savedNotePad);
+      createSpan.innerText = savedNotePad;
+      closestLi.insertAdjacentElement('afterbegin', createSpan);
+      closestLi.appendChild(attachListItemBtn('delete', 'edit', 'Delete', 'Edit'));
+      closestLi.removeChild(input);
+      closestLi.removeChild(btnDiv);
+    }
 
-    // let li = e.target.parentNode;
-    // let liClass = li.className;
-    // let ul = li.parentNode;
-    // ul.removeChild(li);
-    // localStorage.removeItem(liClass);
-    // notePad.value = li.textContent.replace('DeleteEdit', '');
-    // if (noteList.innerHTML === '') {
-    //   noInput.style.display = 'block';
-    // }
-  }
-
-  if (e.target.tagName == 'LI' && e.target.style.overflow == 'hidden') {
-    let liTarget = e.target;
-    liTarget.style.overflow = '';
-    liTarget.style.height = 'auto';
-  } else {
-    let liTarget = e.target
-    liTarget.style.overflow = 'hidden';
-    liTarget.style.height = '15vh';
   }
 
 })
