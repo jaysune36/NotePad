@@ -4,6 +4,8 @@ const inputBtnContainer = document.querySelector('#inputBtnContainer');
 const noInput = document.querySelector('.noInput');
 const noteListContainer = document.querySelector('#noteListContainer');
 const noteList = document.querySelector('.noteList');
+const setValue = {value: []};
+let savedNotePad;
 
 function attachListItemBtn(classOne, classTwo, textOne, textTwo) {
   let createDiv = document.createElement('div');
@@ -16,9 +18,15 @@ function attachListItemBtn(classOne, classTwo, textOne, textTwo) {
 }
 
 function createStorage(li) {
-  const storageObj = {key: li.className, value: li}
-  localStorage.setItem(JSON.stringify(storageObj.key), JSON.stringify(storageObj.value))
+  setValue.value.push(li);
+  console.log(setValue.value);
+  localStorage.setItem('noteList', JSON.stringify(setValue))
 }
+
+//Test Storage
+
+// let testOne = localStorage.getItem('noteList');
+// console.log(JSON.parse(testOne).value)
 
 function createNote(noteInfo) {
   let createLi = document.createElement('li');
@@ -73,7 +81,6 @@ inputBtnContainer.addEventListener('click', (e) => {
 })
 
 noteList.addEventListener('click', (e) => {
-  let savedNotePad;
   if (e.target.tagName === 'BUTTON') {
     const closestLi = e.target.closest('LI');
     if (e.target.className === 'delete') {
@@ -120,7 +127,6 @@ noteList.addEventListener('click', (e) => {
       closestLi.removeChild(input);
       closestLi.removeChild(btnDiv);
     }
-
   }
 
 })
