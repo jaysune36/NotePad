@@ -6,18 +6,20 @@ const noteListContainer = document.querySelector('#noteListContainer');
 const noteList = document.querySelector('.noteList');
 const setValue = {value: []};
 let storageValue = localStorage.getItem('noteList');
+const saveCancel = ['save', 'cancel', 'Save', 'Cancel'];
+const editDelete = ['delete', 'edit', 'Delete', 'Edit'];
 // let storagesJSON = JSON.parse(storageValue).value;
 let savedNotePad = null;
 let indexValue;
 let storagesIndex;
 
 
-function attachListItemBtn(classOne, classTwo, textOne, textTwo) {
+function attachListItemBtn(arrayType) {
   let createDiv = document.createElement('div');
   createDiv.className = 'btnDiv';
   createDiv.innerHTML = `
-    <button class='${classOne}'>${textOne}</button>
-    <button class='${classTwo}'>${textTwo}</button>
+    <button class='${arrayType[0]}'>${arrayType[2]}</button>
+    <button class='${arrayType[1]}'>${arrayType[3]}</button>
   `;
   return createDiv;
 }
@@ -33,9 +35,16 @@ function createNote(noteInfo) {
   `;
   setValue.value.push(noteInfo);
   createStorage(setValue);
-  createLi.appendChild(attachListItemBtn('delete', 'edit', 'Delete', 'Edit'));
+  createLi.appendChild(attachListItemBtn(editDelete));
   noteList.insertAdjacentElement('afterbegin', createLi);
 }
+
+// function insertNewNote(element, ) {
+//   closestLi.insertAdjacentElement('afterbegin',createInput);
+//   closestLi.appendChild(attachListItemBtn('save', 'cancel', 'Save', 'Cancel'));
+//   closestLi.removeChild(noteSpan);
+//   closestLi.removeChild(btnDiv);
+// }
 
 function getStorage() {
   let storagesJSON = JSON.parse(storageValue).value;
@@ -106,7 +115,7 @@ noteList.addEventListener('click', (e) => {
       createInput.setAttribute('type', 'text');
       createInput.value = noteSpan.innerText;
       closestLi.insertAdjacentElement('afterbegin',createInput);
-      closestLi.appendChild(attachListItemBtn('save', 'cancel', 'Save', 'Cancel'));
+      closestLi.appendChild(attachListItemBtn(saveCancel));
       closestLi.removeChild(noteSpan);
       closestLi.removeChild(btnDiv);
     }
@@ -116,7 +125,7 @@ noteList.addEventListener('click', (e) => {
       let createSpan = document.createElement('span');
       createSpan.innerText = document.querySelector('input').value;
 
-      
+
       setValue.value.splice(indexValue, 1);
       setValue.value.splice(indexValue, 0, createSpan.innerText);
       createStorage(setValue)
@@ -129,7 +138,7 @@ noteList.addEventListener('click', (e) => {
 
 
       closestLi.insertAdjacentElement('afterbegin', createSpan);
-      closestLi.appendChild(attachListItemBtn('delete', 'edit', 'Delete', 'Edit'));
+      closestLi.appendChild(attachListItemBtn(editDelete));
       closestLi.removeChild(input);
       closestLi.removeChild(btnDiv);
     }
@@ -140,7 +149,7 @@ noteList.addEventListener('click', (e) => {
       console.log(savedNotePad);
       createSpan.innerText = savedNotePad;
       closestLi.insertAdjacentElement('afterbegin', createSpan);
-      closestLi.appendChild(attachListItemBtn('delete', 'edit', 'Delete', 'Edit'));
+      closestLi.appendChild(attachListItemBtn(editDelete));
       closestLi.removeChild(input);
       closestLi.removeChild(btnDiv);
     }
