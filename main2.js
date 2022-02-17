@@ -6,9 +6,11 @@ const noteListContainer = document.querySelector('#noteListContainer');
 const noteList = document.querySelector('.noteList');
 const setValue = {value: []};
 let storageValue = localStorage.getItem('noteList');
-let storagesJSON = JSON.parse(storageValue).value;
-let savedNotePad;
+// let storagesJSON = JSON.parse(storageValue).value;
+let savedNotePad = null;
+let indexValue;
 let storagesIndex;
+
 
 function attachListItemBtn(classOne, classTwo, textOne, textTwo) {
   let createDiv = document.createElement('div');
@@ -20,9 +22,8 @@ function attachListItemBtn(classOne, classTwo, textOne, textTwo) {
   return createDiv;
 }
 
-function createStorage(li) {
-  setValue.value.push(li);
-  localStorage.setItem('noteList', JSON.stringify(setValue))
+function createStorage(notesArray) {
+  localStorage.setItem('noteList', JSON.stringify(notesArray))
 }
 
 function createNote(noteInfo) {
@@ -30,13 +31,14 @@ function createNote(noteInfo) {
   createLi.innerHTML = `
     <span>${noteInfo}</span>
   `;
-  createStorage(noteInfo);
+  setValue.value.push(noteInfo);
+  createStorage(setValue);
   createLi.appendChild(attachListItemBtn('delete', 'edit', 'Delete', 'Edit'));
   noteList.insertAdjacentElement('afterbegin', createLi);
 }
 
 function getStorage() {
-  storagesJSON = JSON.parse(storageValue).value;
+  let storagesJSON = JSON.parse(storageValue).value;
   for(let i = 0; i<storagesJSON.length; i++) {
     let storageJSON = storagesJSON[i];
     createNote(storageJSON);
@@ -90,11 +92,17 @@ noteList.addEventListener('click', (e) => {
       let createInput = document.createElement('input');
       const btnDiv = closestLi.querySelector('.btnDiv');
       savedNotePad = noteSpan.innerText;
-      storagesIndex = storagesJSON.indexOf(savedNotePad);
-      console.log(storagesJSON)
-      storagesJSON.splice(storagesIndex, 1);
-      console.log(storagesJSON)
-      console.log(storagesIndex)
+
+
+      indexValue = setValue.value.indexOf(savedNotePad);
+      // storagesIndex = JSON.parse(localStorage.getItem('noteList')).value
+      console.log(indexValue);
+      console.log(setValue.value.indexOf(savedNotePad));
+      // console.log(storagesIndex)
+      // storagesJSON.splice(storagesIndex, 1);
+      // setValue.value.splice(storagesIndex, 1);
+
+
       createInput.setAttribute('type', 'text');
       createInput.value = noteSpan.innerText;
       closestLi.insertAdjacentElement('afterbegin',createInput);
@@ -107,9 +115,19 @@ noteList.addEventListener('click', (e) => {
       const btnDiv = closestLi.querySelector('.btnDiv');
       let createSpan = document.createElement('span');
       createSpan.innerText = document.querySelector('input').value;
-      console.log(storagesIndex);
-      storagesJSON.splice(storagesIndex, 0, createSpan.innerText);
-      console.log(storagesJSON)
+
+      
+      setValue.value.splice(indexValue, 1);
+      setValue.value.splice(indexValue, 0, createSpan.innerText);
+      createStorage(setValue)
+      console.log(setValue.value.splice(indexValue, 0, createSpan.innerText));
+      // console.log(storagesIndex);
+      // storagesJSON.splice(storagesIndex, 0, createSpan.innerText);
+      // setValue.value.splice(storagesIndex, 0, createSpan.innerText);
+      // console.log(storagesJSON)
+      // console.log(setValue.value);
+
+
       closestLi.insertAdjacentElement('afterbegin', createSpan);
       closestLi.appendChild(attachListItemBtn('delete', 'edit', 'Delete', 'Edit'));
       closestLi.removeChild(input);
