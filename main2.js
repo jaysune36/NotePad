@@ -4,11 +4,10 @@ const inputBtnContainer = document.querySelector('#inputBtnContainer');
 const noInput = document.querySelector('.noInput');
 const noteListContainer = document.querySelector('#noteListContainer');
 const noteList = document.querySelector('.noteList');
-const setValue = {value: []};
-let storageValue = localStorage.getItem('noteList');
 const saveCancel = ['save', 'cancel', 'Save', 'Cancel'];
 const editDelete = ['delete', 'edit', 'Delete', 'Edit'];
-// let storagesJSON = JSON.parse(storageValue).value;
+const setValue = {value: []};
+let storageValue = localStorage.getItem('noteList');
 let savedNotePad = null;
 let indexValue;
 let storagesIndex;
@@ -42,6 +41,12 @@ function insertNewNote(elementAttach, elementAdd, btnCreate, removeOne, removeTw
   elementAttach.appendChild(attachListItemBtn(btnCreate));
   elementAttach.removeChild(removeOne);
   elementAttach.removeChild(removeTwo);
+}
+
+function findRemoveItem(emptyVarOne, emptyVarTwo, element, array) {
+  emptyVarOne = element.innerText;
+  emptyVarTwo = array.value.indexOf(emptyVarOne);
+  array.value.splice(emptyVarTwo, 1);
 }
 
 function getStorage() {
@@ -85,10 +90,15 @@ inputBtnContainer.addEventListener('click', (e) => {
 noteList.addEventListener('click', (e) => {
   if (e.target.tagName === 'BUTTON') {
     const closestLi = e.target.closest('LI');
+    const btnDiv = closestLi.querySelector('.btnDiv');
+    let input = closestLi.querySelector('input');
+    let createSpan = document.createElement('span');
+    let noteSpan = closestLi.querySelector('span');
     if (e.target.className === 'delete') {
       let li = e.target.parentNode;
       let liClass = li.className;
-      let ul = li.parentNode;
+      findRemoveItem(savedNotePad, indexValue, noteSpan, setValue);
+      createStorage(setValue);
       closestLi.remove();
       localStorage.removeItem(liClass);
       if (noteList.innerHTML === '') {
@@ -96,38 +106,19 @@ noteList.addEventListener('click', (e) => {
       }
     }
     if(e.target.className === 'edit') {
-      let noteSpan = closestLi.querySelector('span');
       let createInput = document.createElement('input');
-      const btnDiv = closestLi.querySelector('.btnDiv');
-      savedNotePad = noteSpan.innerText;
-
-
-      indexValue = setValue.value.indexOf(savedNotePad);
-      setValue.value.splice(indexValue, 1);
-      console.log(setValue.value);
-
-
       createInput.setAttribute('type', 'text');
       createInput.value = noteSpan.innerText;
+      findRemoveItem(savedNotePad, indexValue, noteSpan, setValue);
       insertNewNote(closestLi, createInput, saveCancel, noteSpan, btnDiv);
     }
     if(e.target.className === 'save') {
-      let input = closestLi.querySelector('input');
-      const btnDiv = closestLi.querySelector('.btnDiv');
-      let createSpan = document.createElement('span');
       createSpan.innerText = document.querySelector('input').value;
-
-      
       setValue.value.splice(indexValue, 0, createSpan.innerText);
       createStorage(setValue)
-      console.log(setValue.value);
-
       insertNewNote(closestLi, createSpan, editDelete, input, btnDiv);
     }
     if(e.target.className === 'cancel') {
-      let input = closestLi.querySelector('input');
-      const btnDiv = closestLi.querySelector('.btnDiv');
-      let createSpan = document.createElement('span');
       createSpan.innerText = savedNotePad;
       insertNewNote(closestLi, createSpan, editDelete, input, btnDiv);
     }
