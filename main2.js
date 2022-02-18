@@ -12,6 +12,7 @@ let savedNotePad = null;
 let indexValue;
 let storagesIndex;
 
+console.log(noteList.length)
 
 function attachListItemBtn(arrayType) {
   let createDiv = document.createElement('div');
@@ -36,7 +37,7 @@ function createNote(noteInfo) {
   noteList.insertAdjacentElement('afterbegin', createLi);
 }
 
-function insertNewNote(elementAttach, elementAdd, btnCreate, removeOne, removeTwo) {
+function insertNote(elementAttach, elementAdd, btnCreate, removeOne, removeTwo) {
   elementAttach.insertAdjacentElement('afterbegin',elementAdd);
   elementAttach.appendChild(attachListItemBtn(btnCreate));
   elementAttach.removeChild(removeOne);
@@ -110,17 +111,17 @@ noteList.addEventListener('click', (e) => {
       createInput.setAttribute('type', 'text');
       createInput.value = noteSpan.innerText;
       findRemoveItem(savedNotePad, indexValue, noteSpan, setValue);
-      insertNewNote(closestLi, createInput, saveCancel, noteSpan, btnDiv);
+      insertNote(closestLi, createInput, saveCancel, noteSpan, btnDiv);
     }
     if(e.target.className === 'save') {
       createSpan.innerText = document.querySelector('input').value;
       setValue.value.splice(indexValue, 0, createSpan.innerText);
       createStorage(setValue)
-      insertNewNote(closestLi, createSpan, editDelete, input, btnDiv);
+      insertNote(closestLi, createSpan, editDelete, input, btnDiv);
     }
     if(e.target.className === 'cancel') {
       createSpan.innerText = savedNotePad;
-      insertNewNote(closestLi, createSpan, editDelete, input, btnDiv);
+      insertNote(closestLi, createSpan, editDelete, input, btnDiv);
     }
   }
 
