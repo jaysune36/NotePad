@@ -30,10 +30,8 @@ function createStorage(notesArray) {
 
 function createNote(noteInfo) {
   let createLi = document.createElement('li');
-  createLi.innerHTML = `
-    <span>${noteInfo}</span>
-  `;
-  setValue.value.push(noteInfo);
+  createLi.innerHTML = `<span>${noteInfo}</span>`;
+  setValue.value.unshift(noteInfo);
   createStorage(setValue);
   createLi.appendChild(attachListItemBtn(editDelete));
   noteList.insertAdjacentElement('afterbegin', createLi);
@@ -78,6 +76,7 @@ inputBtnContainer.addEventListener('click', (e) => {
     if (e.target.className == 'deleteAllInputs') {
       noteList.innerHTML = '';
       noInput.style.display = 'block';
+      setValue.value.splice(0, setValue.value.length);
       localStorage.clear();
     }
   }
@@ -104,12 +103,8 @@ noteList.addEventListener('click', (e) => {
 
 
       indexValue = setValue.value.indexOf(savedNotePad);
-      // storagesIndex = JSON.parse(localStorage.getItem('noteList')).value
-      console.log(indexValue);
-      console.log(setValue.value.indexOf(savedNotePad));
-      // console.log(storagesIndex)
-      // storagesJSON.splice(storagesIndex, 1);
-      // setValue.value.splice(storagesIndex, 1);
+      setValue.value.splice(indexValue, 1);
+      console.log(setValue.value);
 
 
       createInput.setAttribute('type', 'text');
@@ -122,16 +117,10 @@ noteList.addEventListener('click', (e) => {
       let createSpan = document.createElement('span');
       createSpan.innerText = document.querySelector('input').value;
 
-
-      setValue.value.splice(indexValue, 1);
+      
       setValue.value.splice(indexValue, 0, createSpan.innerText);
       createStorage(setValue)
-      console.log(setValue.value.splice(indexValue, 0, createSpan.innerText));
-      // console.log(storagesIndex);
-      // storagesJSON.splice(storagesIndex, 0, createSpan.innerText);
-      // setValue.value.splice(storagesIndex, 0, createSpan.innerText);
-      // console.log(storagesJSON)
-      // console.log(setValue.value);
+      console.log(setValue.value);
 
       insertNewNote(closestLi, createSpan, editDelete, input, btnDiv);
     }
