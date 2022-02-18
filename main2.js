@@ -39,12 +39,12 @@ function createNote(noteInfo) {
   noteList.insertAdjacentElement('afterbegin', createLi);
 }
 
-// function insertNewNote(element, ) {
-//   closestLi.insertAdjacentElement('afterbegin',createInput);
-//   closestLi.appendChild(attachListItemBtn('save', 'cancel', 'Save', 'Cancel'));
-//   closestLi.removeChild(noteSpan);
-//   closestLi.removeChild(btnDiv);
-// }
+function insertNewNote(elementAttach, elementAdd, btnCreate, removeOne, removeTwo) {
+  elementAttach.insertAdjacentElement('afterbegin',elementAdd);
+  elementAttach.appendChild(attachListItemBtn(btnCreate));
+  elementAttach.removeChild(removeOne);
+  elementAttach.removeChild(removeTwo);
+}
 
 function getStorage() {
   let storagesJSON = JSON.parse(storageValue).value;
@@ -114,10 +114,7 @@ noteList.addEventListener('click', (e) => {
 
       createInput.setAttribute('type', 'text');
       createInput.value = noteSpan.innerText;
-      closestLi.insertAdjacentElement('afterbegin',createInput);
-      closestLi.appendChild(attachListItemBtn(saveCancel));
-      closestLi.removeChild(noteSpan);
-      closestLi.removeChild(btnDiv);
+      insertNewNote(closestLi, createInput, saveCancel, noteSpan, btnDiv);
     }
     if(e.target.className === 'save') {
       let input = closestLi.querySelector('input');
@@ -136,22 +133,14 @@ noteList.addEventListener('click', (e) => {
       // console.log(storagesJSON)
       // console.log(setValue.value);
 
-
-      closestLi.insertAdjacentElement('afterbegin', createSpan);
-      closestLi.appendChild(attachListItemBtn(editDelete));
-      closestLi.removeChild(input);
-      closestLi.removeChild(btnDiv);
+      insertNewNote(closestLi, createSpan, editDelete, input, btnDiv);
     }
     if(e.target.className === 'cancel') {
       let input = closestLi.querySelector('input');
       const btnDiv = closestLi.querySelector('.btnDiv');
       let createSpan = document.createElement('span');
-      console.log(savedNotePad);
       createSpan.innerText = savedNotePad;
-      closestLi.insertAdjacentElement('afterbegin', createSpan);
-      closestLi.appendChild(attachListItemBtn(editDelete));
-      closestLi.removeChild(input);
-      closestLi.removeChild(btnDiv);
+      insertNewNote(closestLi, createSpan, editDelete, input, btnDiv);
     }
   }
 
