@@ -37,7 +37,9 @@ h1, h2 {
   justify-content: space-between;
 }
 
-.noteSave, .clearInput, .deleteAllInputs {
+.noteSave, 
+.clearInput, 
+.deleteAllInputs {
   margin-top: .75rem;
   height: 2rem;
   width: 30%;
@@ -46,7 +48,12 @@ h1, h2 {
   background-color: #FFFFFF;
 }
 
-.noteSave:hover, .clearInput:hover, .deleteAllInputs:hover, .delete:hover, .edit:hover, li:hover{
+.noteSave:hover, 
+.clearInput:hover, 
+.deleteAllInputs:hover, 
+.delete:hover, 
+.edit:hover, 
+li:hover{
   cursor: pointer;
   background-color: #F5F5F5;
 }
@@ -66,16 +73,21 @@ h1, h2 {
   justify-content: flex-start;
 }
 
-li {
+.noteList li {
   padding: .75rem .5rem;
   height: 15vh;
 }
 
-li:nth-child(odd) {
+.noteList li:nth-child(odd) {
   background-color: lightgray;
 }
 
-.delete, .edit {
+.pages {
+  display: none;
+}
+
+.delete, 
+.edit {
   font-size: .75em;
   padding: .25rem .5rem;
   border-radius: 0.5rem;
@@ -83,7 +95,8 @@ li:nth-child(odd) {
   margin-right: 0;
 }
 
-.delete, .edit {
+.delete, 
+.edit {
   margin-bottom: auto;
 }
 

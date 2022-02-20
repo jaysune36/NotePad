@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
   const editDelete = ['delete', 'edit', 'Delete', 'Edit'];
   const setValue = {value: []};
   let storageValue = localStorage.getItem('noteList');
-  let pagesCount = 0;
+  let pagesCount = 1;
   let notesCount = 0;
   let savedNotePad = null;
   let indexValue;
@@ -31,21 +31,31 @@ document.addEventListener('DOMContentLoaded', ()=> {
 
   function createNote(noteInfo) {
     let createLi = document.createElement('li');
+    let createAnc = document.createElement('a');
+    createLi.setAttribute('data-index', notesCount);
+    createLi.setAttribute('data-set', pagesCount);
     createLi.innerHTML = `<span>${noteInfo}</span>`;
     setValue.value.unshift(noteInfo);
     createStorage(setValue);
     createLi.appendChild(attachListItemBtn(editDelete));
     noteList.insertAdjacentElement('afterbegin', createLi);
-    notesCount++;
-    console.log(notesCount);
-    if(notesCount === 5) {
-      pages.innerText = pagesCount++
-      notesCount = 0;
-      console.log(pagesCount);
+    if(createLi.getAttribute('data-index') < 5) {
+      notesCount++
     } else {
-      return null;
+      for(let i = 0; i < noteList.getElementsByTagName('li').length; i++) {
+        let notes = noteList.getElementsByTagName('li')[i];
+        notes.style.display = 'none';
+        console.log(notes)
+        if(i === 5) {
+          break;
+        }
+      }
+      notesCount = 0;
+      pagesCount ++;
+      createAnc.innerText = pagesCount;
+      createAnc.setAttribute('href', '#');
+      pages.appendChild(createAnc);
     }
-
   }
 
   function insertNote(elementAttach, elementAdd, btnCreate, removeOne, removeTwo) {
@@ -74,22 +84,16 @@ document.addEventListener('DOMContentLoaded', ()=> {
 
   window.addEventListener('load', () => {
     getStorage();
-    if(noteList.getElementsByTagName('li').length > 5) {
-      console.log('there are more than 5 items')
-    }
   })
 
   inputBtnContainer.addEventListener('click', (e) => {
     if (e.target.tagName == 'BUTTON') {
       if (e.target.className == 'noteSave') {
         if (notePad.value) {
-          noInput.style.display = 'none';
           createNote(notePad.value);
+          noInput.style.display = 'none';
+          pages.style.display = 'block';
           notePad.value = null;
-          // if(noteList.getElementsByTagName('li').length > 5) {
-          //   pages.innerHTML = pagesCount++;
-          //   console.log('there are more than 5 items')
-          // }
         }
       }
 
@@ -100,8 +104,10 @@ document.addEventListener('DOMContentLoaded', ()=> {
       if (e.target.className == 'deleteAllInputs') {
         noteList.innerHTML = '';
         noInput.style.display = 'block';
+        pages.style.display = 'none';
         setValue.value.splice(0, setValue.value.length);
-        pagesCount = 0;
+        pagesCount = 1;
+        notesCount = 0;
         localStorage.clear();
       }
     }
@@ -144,5 +150,30 @@ document.addEventListener('DOMContentLoaded', ()=> {
       }
     }
 
+  })
+
+  pages.addEventListener('click', (e)=> {
+    if(e.target.closest('div').className === 'pages') {
+      const notes = noteList.getElementsByTagName('li');
+      if(e.target.tagName === 'A') {
+        let pageSelect = e.target.innerText;
+        for (let i=0; i<notes.length; i++) {
+          let note = notes[i];
+          let dataPage = note.getAttribute('data-set');
+          console.log(note.getAttribute('data-set'))
+          if(dataPage === pageSelect) {
+            note.style.display = 'block';
+          } else {
+            note.style.display = 'none';
+          }
+        }
+        console.log(notes)
+        // for(let i=0; i < notes.getAttribute('data-set').length; i++) {
+        //   let note = notes[i];
+        //   // notes.style.display = 'block';
+        //   console.log(note);
+        // }
+      }
+    }
   })
 })
