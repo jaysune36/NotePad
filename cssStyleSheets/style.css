@@ -84,6 +84,16 @@ li:hover{
 
 .pages {
   display: none;
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.active {
+  color: #0047FD;
+  text-decoration: none;
 }
 
 .delete, 

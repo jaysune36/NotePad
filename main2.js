@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
   const setValue = {value: []};
   let storageValue = localStorage.getItem('noteList');
   let pagesCount = 1;
-  let notesCount = 0;
+  let notesCount = 1;
   let savedNotePad = null;
   let indexValue;
 
@@ -45,12 +45,12 @@ document.addEventListener('DOMContentLoaded', ()=> {
       for(let i = 0; i < noteList.getElementsByTagName('li').length; i++) {
         let notes = noteList.getElementsByTagName('li')[i];
         notes.style.display = 'none';
-        console.log(notes)
+        // console.log(notes)
         if(i === 5) {
           break;
         }
       }
-      notesCount = 0;
+      notesCount = 1;
       pagesCount ++;
       createAnc.innerText = pagesCount;
       createAnc.setAttribute('href', '#');
@@ -84,6 +84,9 @@ document.addEventListener('DOMContentLoaded', ()=> {
 
   window.addEventListener('load', () => {
     getStorage();
+    if(localStorage) {
+      pages.style.display = 'flex';
+    }
   })
 
   inputBtnContainer.addEventListener('click', (e) => {
@@ -107,7 +110,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
         pages.style.display = 'none';
         setValue.value.splice(0, setValue.value.length);
         pagesCount = 1;
-        notesCount = 0;
+        notesCount = 1;
         localStorage.clear();
       }
     }
@@ -122,11 +125,18 @@ document.addEventListener('DOMContentLoaded', ()=> {
       let noteSpan = closestLi.querySelector('span');
       if (e.target.className === 'delete') {
         let li = e.target.parentNode;
+        let liParent = li.parentNode;
         let liClass = li.className;
         findRemoveItem(savedNotePad, indexValue, noteSpan, setValue);
         createStorage(setValue);
         closestLi.remove();
         localStorage.removeItem(liClass);
+        let lis = noteList.getElementsByTagName('li');
+        console.log(lis[liParent])
+        // for(let i=0; i<lis.length; i++) {
+        //   let notesss = lis[i];
+        //   console.log(lis.indexOf(notesss))
+        // }
         if (noteList.innerHTML === '') {
           noInput.style.display = 'block';
         }
@@ -156,23 +166,24 @@ document.addEventListener('DOMContentLoaded', ()=> {
     if(e.target.closest('div').className === 'pages') {
       const notes = noteList.getElementsByTagName('li');
       if(e.target.tagName === 'A') {
-        let pageSelect = e.target.innerText;
+        const pagesIndex = e.target;
+        const pagesLinks = pages.getElementsByTagName('a');
+        let pageSelect = pagesIndex.innerText;
+        for(let j=0; j<pagesLinks.length; j++) {
+          let pageLink = pagesLinks[j];
+            pageLink.className = '';
+        }
+        pagesIndex.className = 'active';
         for (let i=0; i<notes.length; i++) {
           let note = notes[i];
           let dataPage = note.getAttribute('data-set');
-          console.log(note.getAttribute('data-set'))
+          // console.log(note.getAttribute('data-set'))
           if(dataPage === pageSelect) {
-            note.style.display = 'block';
+            note.style.display = 'flex';
           } else {
             note.style.display = 'none';
           }
         }
-        console.log(notes)
-        // for(let i=0; i < notes.getAttribute('data-set').length; i++) {
-        //   let note = notes[i];
-        //   // notes.style.display = 'block';
-        //   console.log(note);
-        // }
       }
     }
   })
