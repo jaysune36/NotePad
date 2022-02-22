@@ -48,11 +48,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
       notesCount = 1;
       pagesCount ++;
     }
-    // console.log(noteList.getElementsByTagName('li').firstElementChild);
-    // console.log(firstChild.getAttribute('data-set') < createLi.getAttribute('data-set'));
-    // console.log(noteList.lastElementChild.getAttribute('data-set') < createLi.getAttribute('data-set'))
     if(firstChild && firstChild.getAttribute('data-set') < createLi.getAttribute('data-set')) {
-      console.log('the set changes')
       for(let i = 0; i < noteList.getElementsByTagName('li').length; i++) {
         let notes = noteList.getElementsByTagName('li')[i];
         console
@@ -145,6 +141,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
         localStorage.removeItem(liClass);
         dataIndex - 1;
         let notesLi = noteList.getElementsByTagName('li');
+        // console.log(pages.lastElementChild);
         for(let i=0; i<notesLi.length; i++) {
           let noteLi = notesLi[i];
           let index = noteLi.getAttribute('data-index');
@@ -160,9 +157,12 @@ document.addEventListener('DOMContentLoaded', ()=> {
           } else {
             return null;
           }
-          
         }
-
+        if(noteList.lastElementChild.getAttribute('data-set') < pagesCount) {
+          pagesCount - 1;
+          console.log(pagesCount)
+          // pages.removeChild();
+        }
         if (noteList.innerHTML === '') {
           noInput.style.display = 'block';
         }
