@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
   const editDelete = ['delete', 'edit', 'Delete', 'Edit'];
   const setValue = {value: []};
   let storageValue = localStorage.getItem('noteList');
+  let dataIndex = 0;
   let pagesCount = 1;
   let notesCount = 1;
   let savedNotePad = null;
@@ -32,20 +33,19 @@ document.addEventListener('DOMContentLoaded', ()=> {
   function createNote(noteInfo) {
     let createLi = document.createElement('li');
     let createAnc = document.createElement('a');
-    createLi.setAttribute('data-index', notesCount);
+    createLi.setAttribute('data-index', dataIndex);
     createLi.setAttribute('data-set', pagesCount);
     createLi.innerHTML = `<span>${noteInfo}</span>`;
     setValue.value.unshift(noteInfo);
     createStorage(setValue);
     createLi.appendChild(attachListItemBtn(editDelete));
     noteList.insertAdjacentElement('afterbegin', createLi);
-    if(createLi.getAttribute('data-index') < 5) {
-      notesCount++
+    if(notesCount < 5) {
+      notesCount++;
     } else {
       for(let i = 0; i < noteList.getElementsByTagName('li').length; i++) {
         let notes = noteList.getElementsByTagName('li')[i];
         notes.style.display = 'none';
-        // console.log(notes)
         if(i === 5) {
           break;
         }
@@ -56,6 +56,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
       createAnc.setAttribute('href', '#');
       pages.appendChild(createAnc);
     }
+    dataIndex++;
   }
 
   function insertNote(elementAttach, elementAdd, btnCreate, removeOne, removeTwo) {
@@ -125,18 +126,31 @@ document.addEventListener('DOMContentLoaded', ()=> {
       let noteSpan = closestLi.querySelector('span');
       if (e.target.className === 'delete') {
         let li = e.target.parentNode;
-        let liParent = li.parentNode;
+        let liIndex = closestLi.getAttribute('data-index');
         let liClass = li.className;
         findRemoveItem(savedNotePad, indexValue, noteSpan, setValue);
         createStorage(setValue);
         closestLi.remove();
         localStorage.removeItem(liClass);
-        let lis = noteList.getElementsByTagName('li');
-        console.log(lis[liParent])
-        // for(let i=0; i<lis.length; i++) {
-        //   let notesss = lis[i];
-        //   console.log(lis.indexOf(notesss))
-        // }
+        let notesLi = noteList.getElementsByTagName('li');
+        for(let i=0; i<notesLi.length; i++) {
+          let noteLi = notesLi[i];
+          let index = noteLi.getAttribute('data-index');
+          let set = noteLi.getAttribute('data-set')
+          if(index > liIndex) {
+            noteLi.setAttribute('data-index', index - 1);
+            if(noteLi.getAttribute('data-index').includes(4) || noteLi.getAttribute('data-index').includes(9)) {
+              noteLi.setAttribute('data-set', set - 1);
+              console.log(noteLi.previousElementSibling)
+              if(noteLi.nextElementSibling.style.display === 'flex') {
+                noteLi.style.display = 'flex';
+              }
+            }
+          } else {
+            return null;
+          }
+        }
+
         if (noteList.innerHTML === '') {
           noInput.style.display = 'block';
         }
