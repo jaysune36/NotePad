@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
   const noInput = document.querySelector('.noInput');
   const noteListContainer = document.querySelector('#noteListContainer');
   const noteList = document.querySelector('.noteList');
-  const pages = document.querySelector('.pages')
+  const pages = document.querySelector('.pages');
   const saveCancel = ['save', 'cancel', 'Save', 'Cancel'];
   const editDelete = ['delete', 'edit', 'Delete', 'Edit'];
   const setValue = {value: []};
@@ -27,12 +27,13 @@ document.addEventListener('DOMContentLoaded', ()=> {
   }
 
   function createStorage(notesArray) {
-    localStorage.setItem('noteList', JSON.stringify(notesArray))
+    localStorage.setItem('noteList', JSON.stringify(notesArray));
   }
 
   function createNote(noteInfo) {
     let createLi = document.createElement('li');
     let createAnc = document.createElement('a');
+    const firstChild = noteList.firstElementChild;
     createLi.setAttribute('data-index', dataIndex);
     createLi.setAttribute('data-set', pagesCount);
     createLi.innerHTML = `<span>${noteInfo}</span>`;
@@ -40,23 +41,33 @@ document.addEventListener('DOMContentLoaded', ()=> {
     createStorage(setValue);
     createLi.appendChild(attachListItemBtn(editDelete));
     noteList.insertAdjacentElement('afterbegin', createLi);
+    dataIndex++;
     if(notesCount < 5) {
       notesCount++;
     } else {
+      notesCount = 1;
+      pagesCount ++;
+    }
+    // console.log(noteList.getElementsByTagName('li').firstElementChild);
+    // console.log(firstChild.getAttribute('data-set') < createLi.getAttribute('data-set'));
+    // console.log(noteList.lastElementChild.getAttribute('data-set') < createLi.getAttribute('data-set'))
+    if(firstChild && firstChild.getAttribute('data-set') < createLi.getAttribute('data-set')) {
+      console.log('the set changes')
       for(let i = 0; i < noteList.getElementsByTagName('li').length; i++) {
         let notes = noteList.getElementsByTagName('li')[i];
+        console
+        if(notes.getAttribute('data-set') < createLi.getAttribute('data-set'))
         notes.style.display = 'none';
         if(i === 5) {
           break;
         }
       }
-      notesCount = 1;
-      pagesCount ++;
       createAnc.innerText = pagesCount;
       createAnc.setAttribute('href', '#');
       pages.appendChild(createAnc);
+    } else {
+      return null;
     }
-    dataIndex++;
   }
 
   function insertNote(elementAttach, elementAdd, btnCreate, removeOne, removeTwo) {
@@ -88,7 +99,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
     if(localStorage) {
       pages.style.display = 'flex';
     }
-  })
+  });
 
   inputBtnContainer.addEventListener('click', (e) => {
     if (e.target.tagName == 'BUTTON') {
@@ -115,7 +126,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
         localStorage.clear();
       }
     }
-  })
+  });
 
   noteList.addEventListener('click', (e) => {
     if (e.target.tagName === 'BUTTON') {
@@ -132,16 +143,16 @@ document.addEventListener('DOMContentLoaded', ()=> {
         createStorage(setValue);
         closestLi.remove();
         localStorage.removeItem(liClass);
+        dataIndex - 1;
         let notesLi = noteList.getElementsByTagName('li');
         for(let i=0; i<notesLi.length; i++) {
           let noteLi = notesLi[i];
           let index = noteLi.getAttribute('data-index');
-          let set = noteLi.getAttribute('data-set')
+          let set = noteLi.getAttribute('data-set');
           if(index > liIndex) {
             noteLi.setAttribute('data-index', index - 1);
             if(noteLi.getAttribute('data-index').includes(4) || noteLi.getAttribute('data-index').includes(9)) {
               noteLi.setAttribute('data-set', set - 1);
-              console.log(noteLi.previousElementSibling)
               if(noteLi.nextElementSibling.style.display === 'flex') {
                 noteLi.style.display = 'flex';
               }
@@ -149,6 +160,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
           } else {
             return null;
           }
+          
         }
 
         if (noteList.innerHTML === '') {
@@ -165,7 +177,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
       if(e.target.className === 'save') {
         createSpan.innerText = document.querySelector('input').value;
         setValue.value.splice(indexValue, 0, createSpan.innerText);
-        createStorage(setValue)
+        createStorage(setValue);
         insertNote(closestLi, createSpan, editDelete, input, btnDiv);
       }
       if(e.target.className === 'cancel') {
@@ -174,7 +186,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
       }
     }
 
-  })
+  });
 
   pages.addEventListener('click', (e)=> {
     if(e.target.closest('div').className === 'pages') {
@@ -200,5 +212,5 @@ document.addEventListener('DOMContentLoaded', ()=> {
         }
       }
     }
-  })
-})
+  });
+});
