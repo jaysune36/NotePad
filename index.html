@@ -4,13 +4,18 @@
 <head>
   <link rel="stylesheet" href="cssStyleSheets/normalize copy.css">
   <link rel="stylesheet" type="text/css" href="cssStyleSheets/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
 </head>
 
 <body>
+  <header>
+    <h1>NotePad</h1>
+  </header>
   <main class="container">
     <!-- main container -->
     <div class="notepad-container"><!-- notePad container-->
-      <h1>NotePad</h1>
       <h2>What's on your mind?</h2>
       <textarea id="notePad" placeholder="What are your thoughts..."></textarea>
       <div id="inputBtnContainer">
@@ -21,10 +26,10 @@
     </div> <!-- /notePad container-->
     <div class="noteListContainer"><!--noteList container-->
       <h3 class="noInput">No Notes Currently Saved</h3>
-      <ul class="noteList"></ul>
       <div class='pages'>
-        <a href="#" class='active'>1</a>
+        <p class='active'>1</p>
       </div>
+      <ul class="noteList"></ul>
     </div> <!-- /noteList container-->
   </main><!-- /main container-->
   <script src="main2.js"></script>

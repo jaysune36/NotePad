@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
 
   function createNote(noteInfo) {
     let createLi = document.createElement('li');
-    let createAnc = document.createElement('a');
+    let createP = document.createElement('p');
     const firstChild = noteList.firstElementChild;
     createLi.setAttribute('data-index', dataIndex);
     createLi.setAttribute('data-set', pagesCount);
@@ -58,9 +58,8 @@ document.addEventListener('DOMContentLoaded', ()=> {
           break;
         }
       }
-      createAnc.innerText = pagesCount;
-      createAnc.setAttribute('href', '#');
-      pages.appendChild(createAnc);
+      createP.innerText = pagesCount;
+      pages.appendChild(createP);
     } else {
       return null;
     }
@@ -93,7 +92,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
   window.addEventListener('load', () => {
     getStorage();
     if(localStorage) {
-      pages.style.display = 'flex';
+      pages.style.display = 'block';
     }
   });
 
@@ -191,9 +190,9 @@ document.addEventListener('DOMContentLoaded', ()=> {
   pages.addEventListener('click', (e)=> {
     if(e.target.closest('div').className === 'pages') {
       const notes = noteList.getElementsByTagName('li');
-      if(e.target.tagName === 'A') {
+      if(e.target.tagName === 'P') {
         const pagesIndex = e.target;
-        const pagesLinks = pages.getElementsByTagName('a');
+        const pagesLinks = pages.getElementsByTagName('p');
         let pageSelect = pagesIndex.innerText;
         for(let j=0; j<pagesLinks.length; j++) {
           let pageLink = pagesLinks[j];

@@ -6,9 +6,13 @@
   box-sizing: border-box;
 }
 
+header {
+  background-color: #32E862;
+}
+
 body {
-  width: 70%;
-  margin: auto;
+  background-color: #f0f0f0;
+  font-family: 'Poppins', sans-serif;
 }
 
 h1, h2 {
@@ -16,14 +20,22 @@ h1, h2 {
 }
 
 .container {
+  width: 70%;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 
 /* ======================
     PAGE STYLING
 ========================== */
+
+h1 {
+  margin: 0;
+  padding: 2rem 0;
+}
 
 #notePad {
   max-width:100%;
@@ -37,6 +49,12 @@ h1, h2 {
   justify-content: space-between;
 }
 
+#noteListContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+
 .noteSave, 
 .clearInput, 
 .deleteAllInputs {
@@ -48,11 +66,13 @@ h1, h2 {
   background-color: #FFFFFF;
 }
 
-.noteSave:hover, 
+/* .noteSave:hover, 
 .clearInput:hover, 
 .deleteAllInputs:hover, 
 .delete:hover, 
-.edit:hover, 
+.edit:hover,  */
+#inputBtnContainer button:hover,
+.btnDiv button:hover,
 li:hover{
   cursor: pointer;
   background-color: #F5F5F5;
@@ -69,35 +89,57 @@ li:hover{
 }
 
 .noteList li {
+  margin-bottom: 1rem;
+  border-radius: 5px;
   display: flex;
-  justify-content: flex-start;
+  flex-direction: row;
+}
+
+.btnDiv {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .noteList li {
   padding: .75rem .5rem;
-  height: 15vh;
+}
+
+li input {
+  width: 100%;
 }
 
 .noteList li:nth-child(odd) {
-  background-color: lightgray;
+  background-color: #32E862;
+}
+
+.noteList li:nth-child(even) {
+  background-color: #fff;
 }
 
 .pages {
   display: none;
   width: 50%;
-  margin: 0 auto;
+  margin: 1rem auto 0 auto;
   text-align: center;
-  flex-direction: row;
-  justify-content: space-between;
+}
+
+.pages p {
+  display: inline;
+  margin: 0 .5rem;
+}
+
+.pages p:hover {
+  cursor: pointer;
 }
 
 .active {
-  color: #0047FD;
+  color: #32E862;
+  border-bottom: 1px solid #32E862;
   text-decoration: none;
 }
 
-.delete, 
-.edit {
+.btnDiv button{
   font-size: .75em;
   padding: .25rem .5rem;
   border-radius: 0.5rem;
@@ -105,14 +147,14 @@ li:hover{
   margin-right: 0;
 }
 
-.delete, 
+/* .delete, 
 .edit {
   margin-bottom: auto;
 }
 
 .delete {
   margin-left: auto;
-}
+} */
 
 /* ======================
     MEDIA QUERIES
@@ -120,11 +162,8 @@ li:hover{
 
 @media(min-width: 987px) {
 
-  body{
-    width: 80%;
-  }
-
   .container {
+    width: 80%;
     flex-direction: row;
     justify-content: space-between;
   }
@@ -137,11 +176,15 @@ li:hover{
     width: 48%;
   }
 
-  .noteListContainer {
-    margin-top: 5rem;
+  .notepad-container {
+    margin-bottom: auto;
   }
 
-  .noteList li {
+  /* .noteListContainer {
+    margin-top: 5rem;
+  } */
+
+  /* .noteList li {
     flex-wrap: wrap;
-  }
+  } */
 }
