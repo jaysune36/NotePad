@@ -49,7 +49,7 @@ h1 {
   justify-content: space-between;
 }
 
-#noteListContainer {
+.noteListContainer {
   display: flex;
   flex-direction: column;
 }
@@ -66,16 +66,11 @@ h1 {
   background-color: #FFFFFF;
 }
 
-/* .noteSave:hover, 
-.clearInput:hover, 
-.deleteAllInputs:hover, 
-.delete:hover, 
-.edit:hover,  */
 #inputBtnContainer button:hover,
 .btnDiv button:hover,
 li:hover{
   cursor: pointer;
-  background-color: #F5F5F5;
+  background-color: #32E862;
 }
 
 .noInput {
@@ -120,7 +115,7 @@ li input {
 .pages {
   display: none;
   width: 50%;
-  margin: 1rem auto 0 auto;
+  margin: 1em auto auto auto;
   text-align: center;
 }
 
@@ -146,15 +141,6 @@ li input {
   background-color: #FFFFFF;
   margin-right: 0;
 }
-
-/* .delete, 
-.edit {
-  margin-bottom: auto;
-}
-
-.delete {
-  margin-left: auto;
-} */
 
 /* ======================
     MEDIA QUERIES

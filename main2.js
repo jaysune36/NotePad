@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
   const noInput = document.querySelector('.noInput');
   const noteListContainer = document.querySelector('#noteListContainer');
   const noteList = document.querySelector('.noteList');
+  let notesLi = noteList.getElementsByTagName('li');
   const pages = document.querySelector('.pages');
   const saveCancel = ['save', 'cancel', 'Save', 'Cancel'];
   const editDelete = ['delete', 'edit', 'Delete', 'Edit'];
@@ -15,6 +16,10 @@ document.addEventListener('DOMContentLoaded', ()=> {
   let notesCount = 1;
   let savedNotePad = null;
   let indexValue;
+
+  function elementStyleDisplay(element, display) {
+    element.style.display = display;
+  }
 
   function attachListItemBtn(arrayType) {
     let createDiv = document.createElement('div');
@@ -51,9 +56,8 @@ document.addEventListener('DOMContentLoaded', ()=> {
     if(firstChild && firstChild.getAttribute('data-set') < createLi.getAttribute('data-set')) {
       for(let i = 0; i < noteList.getElementsByTagName('li').length; i++) {
         let notes = noteList.getElementsByTagName('li')[i];
-        console
-        if(notes.getAttribute('data-set') < createLi.getAttribute('data-set'))
-        notes.style.display = 'none';
+        if(notes.getAttribute('data-set') < createLi.getAttribute('data-set'));
+        elementStyleDisplay(notes, 'none');
         if(i === 5) {
           break;
         }
@@ -62,6 +66,29 @@ document.addEventListener('DOMContentLoaded', ()=> {
       pages.appendChild(createP);
     } else {
       return null;
+    }
+  }
+
+  function noteDisplayToggle() {
+    
+  }
+
+  function dataPageNoteaAdjustment(elementIndex) {
+    for(let i=0; i<notesLi.length; i++) {
+      let noteLi = notesLi[i];
+      let index = noteLi.getAttribute('data-index');
+      let set = noteLi.getAttribute('data-set');
+      if(index > elementIndex) {
+        noteLi.setAttribute('data-index', index - 1);
+        if(noteLi.getAttribute('data-index').includes(4) || noteLi.getAttribute('data-index').includes(9)) {
+          noteLi.setAttribute('data-set', set - 1);
+          if(noteLi.nextElementSibling.style.display === 'flex') {
+            elementStyleDisplay(noteLi, 'flex');
+          }
+        }
+      } else {
+        return null;
+      }
     }
   }
 
@@ -84,7 +111,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
       let storageJSON = storagesJSON[i];
       createNote(storageJSON);
       if (localStorage) {
-        noInput.style.display = 'none';
+        elementStyleDisplay(noInput, 'none');
       }
     }
   }
@@ -92,7 +119,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
   window.addEventListener('load', () => {
     getStorage();
     if(localStorage) {
-      pages.style.display = 'block';
+      elementStyleDisplay(pages, 'block');
     }
   });
 
@@ -101,8 +128,8 @@ document.addEventListener('DOMContentLoaded', ()=> {
       if (e.target.className == 'noteSave') {
         if (notePad.value) {
           createNote(notePad.value);
-          noInput.style.display = 'none';
-          pages.style.display = 'block';
+          elementStyleDisplay(noInput, 'none');
+          elementStyleDisplay(pages, 'block');
           notePad.value = null;
         }
       }
@@ -113,8 +140,8 @@ document.addEventListener('DOMContentLoaded', ()=> {
 
       if (e.target.className == 'deleteAllInputs') {
         noteList.innerHTML = '';
-        noInput.style.display = 'block';
-        pages.style.display = 'none';
+        elementStyleDisplay(noInput, 'block');
+        elementStyleDisplay(pages, 'none');
         setValue.value.splice(0, setValue.value.length);
         pagesCount = 1;
         notesCount = 1;
@@ -135,35 +162,23 @@ document.addEventListener('DOMContentLoaded', ()=> {
         let liIndex = closestLi.getAttribute('data-index');
         let liClass = li.className;
         findRemoveItem(savedNotePad, indexValue, noteSpan, setValue);
+        dataPageNoteaAdjustment(liIndex);
         createStorage(setValue);
         closestLi.remove();
         localStorage.removeItem(liClass);
         dataIndex - 1;
-        let notesLi = noteList.getElementsByTagName('li');
-        // console.log(pages.lastElementChild);
-        for(let i=0; i<notesLi.length; i++) {
-          let noteLi = notesLi[i];
-          let index = noteLi.getAttribute('data-index');
-          let set = noteLi.getAttribute('data-set');
-          if(index > liIndex) {
-            noteLi.setAttribute('data-index', index - 1);
-            if(noteLi.getAttribute('data-index').includes(4) || noteLi.getAttribute('data-index').includes(9)) {
-              noteLi.setAttribute('data-set', set - 1);
-              if(noteLi.nextElementSibling.style.display === 'flex') {
-                noteLi.style.display = 'flex';
-              }
-            }
-          } else {
-            return null;
+        if(noteList.firstElementChild.getAttribute('data-set') < pagesCount) {
+          pagesCount -= 1;
+          pages.removeChild(pages.lastElementChild);
+          for(let i = 0; i < noteList.getElementsByTagName('li').length; i++) {
+            let notes = noteList.getElementsByTagName('li')[i];
+            console.log(notes.getAttribute('data-set') !== pagesCount)
+            if(notes.getAttribute('data-set') === pagesCount)
+            elementStyleDisplay(notes, 'flex');
           }
         }
-        if(noteList.lastElementChild.getAttribute('data-set') < pagesCount) {
-          pagesCount - 1;
-          console.log(pagesCount)
-          // pages.removeChild();
-        }
         if (noteList.innerHTML === '') {
-          noInput.style.display = 'block';
+          elementStyleDisplay(noInput, 'block');
         }
       }
       if(e.target.className === 'edit') {
@@ -202,11 +217,10 @@ document.addEventListener('DOMContentLoaded', ()=> {
         for (let i=0; i<notes.length; i++) {
           let note = notes[i];
           let dataPage = note.getAttribute('data-set');
-          // console.log(note.getAttribute('data-set'))
           if(dataPage === pageSelect) {
-            note.style.display = 'flex';
+            elementStyleDisplay(note, 'flex');
           } else {
-            note.style.display = 'none';
+            elementStyleDisplay(note, 'none');
           }
         }
       }
