@@ -69,8 +69,15 @@ document.addEventListener('DOMContentLoaded', ()=> {
     }
   }
 
-  function noteDisplayToggle() {
-    
+  function pageSelect() {
+    for(let j=0; j<pages.getElementsByTagName('p').length; j++) {
+      let page = pages.getElementsByTagName('p')[j];
+      if(parseInt(page.innerText) === pagesCount) {
+        page.className = 'active';
+      } else {
+        page.className ='';
+      }
+    }
   }
 
   function dataPageNoteaAdjustment(elementIndex) {
@@ -116,11 +123,34 @@ document.addEventListener('DOMContentLoaded', ()=> {
     }
   }
 
+  function notesDisplay() {
+    // for(let i = 0; i < noteList.getElementsByTagName('li').length; i++) {
+    //   let notes = noteList.getElementsByTagName('li')[i];
+    //   if(parseInt(notes.getAttribute('data-set')) === pagesCount) {
+    //     elementStyleDisplay(notes, 'flex');
+    //   }
+    // }
+
+    noteList.getElementsByTagName('li').forEach(note => {
+      console.log(note)
+    })
+  }
+
   window.addEventListener('load', () => {
-    getStorage();
+    getStorage(); 
+    notesDisplay();
+    
+    // for(let i = 0; i < noteList.getElementsByTagName('li').length; i++) {
+    //   let notes = noteList.getElementsByTagName('li')[i];
+    //   console.log(notes.getAttribute('data-set') + ' ' + pagesCount)
+    //   // if(parseInt(notes.getAttribute('data-set')) === pagesCount) {
+    //   //   elementStyleDisplay(notes, 'flex');
+    //   // }
+    // }
     if(localStorage) {
       elementStyleDisplay(pages, 'block');
     }
+    pageSelect();
   });
 
   inputBtnContainer.addEventListener('click', (e) => {
@@ -168,15 +198,11 @@ document.addEventListener('DOMContentLoaded', ()=> {
         localStorage.removeItem(liClass);
         dataIndex - 1;
         if(noteList.firstElementChild.getAttribute('data-set') < pagesCount) {
-          pagesCount -= 1;
+          pagesCount --;
           pages.removeChild(pages.lastElementChild);
-          for(let i = 0; i < noteList.getElementsByTagName('li').length; i++) {
-            let notes = noteList.getElementsByTagName('li')[i];
-            console.log(notes.getAttribute('data-set') !== pagesCount)
-            if(notes.getAttribute('data-set') === pagesCount)
-            elementStyleDisplay(notes, 'flex');
-          }
+          notesDisplay();
         }
+        pageSelect();
         if (noteList.innerHTML === '') {
           elementStyleDisplay(noInput, 'block');
         }
