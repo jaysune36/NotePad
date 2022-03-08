@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
   function createNote(noteInfo) {
     let createLi = document.createElement('li');
     let createP = document.createElement('p');
-    const firstChild = noteList.firstElementChild;
+    const firstChild = noteList.getElementsByTagName('li')[0];
     createLi.setAttribute('data-index', dataIndex);
     createLi.setAttribute('data-set', pagesCount);
     createLi.innerHTML = `<span>${noteInfo}</span>`;
@@ -64,15 +64,17 @@ document.addEventListener('DOMContentLoaded', ()=> {
       }
       createP.innerText = pagesCount;
       pages.appendChild(createP);
+      pageSelect()
     } else {
       return null;
     }
   }
 
   function pageSelect() {
+    let noteSet = noteList.getElementsByTagName('li')[0];
     for(let j=0; j<pages.getElementsByTagName('p').length; j++) {
       let page = pages.getElementsByTagName('p')[j];
-      if(parseInt(page.innerText) === pagesCount) {
+      if(page.innerText === noteSet.getAttribute('data-set')) {
         page.className = 'active';
       } else {
         page.className ='';
@@ -124,29 +126,22 @@ document.addEventListener('DOMContentLoaded', ()=> {
   }
 
   function notesDisplay() {
-    // for(let i = 0; i < noteList.getElementsByTagName('li').length; i++) {
-    //   let notes = noteList.getElementsByTagName('li')[i];
-    //   if(parseInt(notes.getAttribute('data-set')) === pagesCount) {
-    //     elementStyleDisplay(notes, 'flex');
-    //   }
-    // }
-
-    noteList.getElementsByTagName('li').forEach(note => {
-      console.log(note)
-    })
+    let notes = noteList.getElementsByTagName('li');
+    const lastItem = notes[0]
+    for(let i=0; i<notes.length; i++) {
+      let note = noteList.getElementsByTagName('li')[i];
+      if(note.getAttribute('data-set') === lastItem.getAttribute('data-set')) {
+        elementStyleDisplay(note, 'flex')
+      } else {
+        return null;
+      }
+    }
+    
   }
 
   window.addEventListener('load', () => {
     getStorage(); 
     notesDisplay();
-    
-    // for(let i = 0; i < noteList.getElementsByTagName('li').length; i++) {
-    //   let notes = noteList.getElementsByTagName('li')[i];
-    //   console.log(notes.getAttribute('data-set') + ' ' + pagesCount)
-    //   // if(parseInt(notes.getAttribute('data-set')) === pagesCount) {
-    //   //   elementStyleDisplay(notes, 'flex');
-    //   // }
-    // }
     if(localStorage) {
       elementStyleDisplay(pages, 'block');
     }
